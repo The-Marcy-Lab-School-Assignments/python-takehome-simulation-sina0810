@@ -21,8 +21,20 @@ for row in rows:
 maxx = max(complaint_count, key= complaint_count.get)
 print(maxx)
 
+borough_count = {}
+for row in rows:
+    borough = row['borough']
+    if borough in borough_count:
+        borough_count[borough] += 1
+    else:
+        borough_count[borough] = 1
+
+sorted_boroughs = sorted(borough_count.keys())
+
 with open('output.txt', 'w') as f:
     f.write(f"Open requests: {open_count}\n\n")
     f.write(f"Most common complaint type: {maxx} ({complaint_count[maxx]} requests)")
-
+    f.write("\nRequests per borough:\n")
+    for borough in sorted_boroughs:
+        f.write(f"- {borough}: {borough_count[borough]}\n")
 print("Output saved to output.txt")
